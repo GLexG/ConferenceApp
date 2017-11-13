@@ -1,0 +1,145 @@
+
+#containter{
+    width: 95%;
+    margin: 10px auto;
+    min-height: 100%;
+}
+
+#header{
+    height: 150px;
+    width: 20%; /*Da bi tekst bio centriran (to je % koliko tekst zauzima u polju)*/
+    text-align: center;
+    //background-color: #4b88c4;
+    background-image: url("#{resource['images:light_blue.jpg']}");
+    font-size: 50px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#sredina{
+    margin-top: 20px;
+}
+
+#footer{
+    margin: 2px auto;
+    font-size: 15px;
+    width: 95%;
+    text-align: center;
+}
+
+.ui-icon.fa {   /*Da bi radio font awesome*/
+     text-indent:0px;
+     background-image:none;
+     font-size: 16px;
+}
+
+.mrvice{
+    border: none !important;
+    font-size: 16px;
+}
+
+#logIn{
+    font-size: 15px;
+    text-align: right;
+}
+
+.logInTabela tr,
+.logInTabela td{
+    background: none !important;
+    border: 0 !important;
+    color: black;
+}
+
+#regIPro{
+    font-size: 15px;
+    text-align: right;
+}
+
+.polje{
+    height: 50px;
+}
+
+#datumPretraga{
+    padding-left: 55px;
+}
+
+#profil{
+    font-size: 20px;
+    text-align: left;
+}
+
+#dogInfo{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.ui-selectonemenu-label{    /*Da bi se select prikazivao kako treba pri ucitavanju strane*/
+    width:95% !important;
+}
+
+.rezervacija{
+    text-align: right;
+}
+
+.ulazRezTabelaSiv tr,
+.ulazRezTabelaSiv td{
+    background: #ACACAC !important;
+}
+
+.column1Siv,
+.column2Siv{
+    background: #ACACAC !important;
+}
+
+.bojaTeksta{
+    color: red;
+}
+
+.bojaTekstaProsao{
+    color: black;
+}
+
+#sanduceInfo{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.poruka{
+    font-weight: bold;
+}
+
+.tabelaBezIvica tr,
+.tabelaBezIvica td{
+    border: 0 !important;
+}
+
+.tabelaLeon tr,
+.tabelaLeon td{
+    border: 0 !important;
+    margin-left:auto;
+}
+
+.oceni{
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px !important;
+}
+
+.ocena{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.posaljiOcenu{
+    float: right;
+    margin-right: 10px;
+}
+
+.ocenaDogadjaja{
+    float: right;
+    margin-right: 10px;
+    font-size: 30px !important;
+}

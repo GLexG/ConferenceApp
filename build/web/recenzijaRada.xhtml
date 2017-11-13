@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaRecezent" icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Radova za Recenziju" outcome="pregledRRecezent" />
+                        <p:menuitem value="Recenzija Rada"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+                <h:form enctype="multipart/form-data">
+                    <p:growl autoUpdate="true"/>
+                    <div id="sanduceInfo">
+                        <p:wizard backLabel="Nazad" nextLabel="Dalje">
+                            <p:tab title="Osnovni podaci">
+                                <p:panel>
+                                    <p:panelGrid columns="2" class="tabelaBezIvica">
+
+                                        <p:outputLabel value="Naslov rada"/>
+                                      
+                                            <p:outputLabel value="#{recenzijaRadaBean.naslov}"  />
+
+                                        
+                                        <p:outputLabel value="Oblast rada:"/>
+                                        
+                                            <p:outputLabel value="#{recenzijaRadaBean.oblast}" />
+
+                                        <h4>I NAUCNO-STRUCNI NIVO</h4><h4></h4><p:outputLabel value=""/>
+                                        <p:outputLabel value="1.Relevantnost za konferenciju/sekciju(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.relevantnost}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="2.Originalnost teme(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.originalnost}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="3.Primenljivost rezultata rada(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.primenljivost}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="4.Naucni doprinost rada(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.doprinost}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="5.Autor publikovao slican rad(ako jeste: do -20,ako nije 0):"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.publikovao}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <h4>II TEHNICKI NIVO</h4><h4></h4><p:outputLabel value=""/>
+                                        <p:outputLabel value="1.Konciznost i jasnoca izrazavanja(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.konciznost}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="2.Formatiranje,tehnika(kvalitet ilustracija,tabela,uskladjenost oznaka)(0-10)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.format}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="Kvalitet referenci(aktuelnost,relevantne reference drugih autora)(0-5)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.kvalitet}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+                                        <p:outputLabel value="Da li naslov odgovara sadrzaju rada(0-5)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.naslovodgovara}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <h4>III OPSTA OCENA KVALITETA RADA(0-30)</h4><h5></h5>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.opstaocena}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <h4>IV UKUPNA OCENA</h4>
+
+                                            <p:outputLabel value="#{recenzijaRadaBean.ukupnaocena}" />
+
+                                        <h4>V PREPORUKE KOORDINATORU</h4><p:outputLabel value=""/>
+                                        
+                                        <p:outputLabel value="1.Prihvatiti bez ikakvih izmena"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.preporuka1}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <p:outputLabel value="2.Prihvatiti uz sitnije izmene tehnicke prirode"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.preporuka2}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <p:outputLabel value="3.Prihvatiti uz sitnije izmene naucno-strucne prirode"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.preporuka3}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <p:outputLabel value="4.Prihvatiti samo ukoliko se ucine sustinske izmene"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.preporuka4}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        <p:outputLabel value="5.Rad se bezuslovno odbija(OBAVEZNO OBRAZLOZITI u komentarima)"/>
+                                        <p:inplace >
+                                            <p:inputText value="#{recenzijaRadaBean.preporuka5}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        </p:inplace>
+                                        
+
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:tab>
+                            <p:tab title="Komentari">
+                                <p:panel>
+                                    <p:panelGrid columns="1" class="tabelaBezIvica">
+                                        <h4>KOMENTARI RECEZENTA ZA AUTORE</h4><h4></h4><p:outputLabel value=""/>
+                                        <h4>1.Primedbe tehnicke prirode</h4>
+                                        <p:inplace>
+                                            <p:inputTextarea value="#{recenzijaRadaBean.komentar1}" rows="7" cols="60" required="true" requiredMessage="Niste uneli tekst."/>
+                                        </p:inplace>
+                                        <h4>2.Sitnije primedbe naucno-strucne prirode</h4>
+
+                                        <p:inplace>
+                                            <p:inputTextarea value="#{recenzijaRadaBean.komentar2}" rows="7" cols="60" required="true" requiredMessage="Niste uneli tekst."/>
+                                        </p:inplace>
+                                        <h4>3.Sustinske primedbe od cijeg usvajanja zavisi prihvatanje rada</h4>
+                                        <p:inplace>
+                                            <p:inputTextarea value="#{recenzijaRadaBean.komentar3}" rows="7" cols="60" required="true" requiredMessage="Niste uneli tekst."/>
+                                        </p:inplace>
+                                        <h4>4.Opsti komentari</h4>
+                                        <p:inplace>
+                                            <p:inputTextarea value="#{recenzijaRadaBean.komentar4}" rows="7" cols="60" required="true" requiredMessage="Niste uneli tekst."/>
+                                        </p:inplace>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                        </p:wizard>
+
+                        <p:spacer width="0" height="30px"/>
+                        <p:commandButton value="Sacuvaj" action="#{recenzijaRadaBean.izmeniRecenziju()}" ajax="false"/>
+                        <p:spacer width="30px" height="30px"/>
+                        <p:commandButton value="Posalji" action="#{recenzijaRadaBean.posaljiRecenziju()}" ajax="false"/>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

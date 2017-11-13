@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAutor" icon="fa fa-home"/>
+                        <p:menuitem value="Dodavanje Rada"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+                <h:form enctype="multipart/form-data">
+                    <p:growl autoUpdate="true"/>
+                    <div id="sanduceInfo">
+                        <p:wizard backLabel="Nazad" nextLabel="Dalje">
+                            <p:tab title="Osnovni podaci">
+                                <p:panel>
+                                    <p:panelGrid columns="2" class="tabelaBezIvica">
+                                            
+                                <p:outputLabel value="Konferencije:"/>
+                                <p:selectOneMenu value="#{radoviBean.selektovanaKonferencija}">
+                                    <p:ajax listener="#{radoviBean.onCountryChange}" update="city" />
+                                    <f:selectItem itemValue="Sve Konferencije" itemLabel="Sve Konferencije"/>
+                                    <f:selectItems value="#{radoviBean.dohvatiSveKonferencije()}"/>
+                                </p:selectOneMenu>
+                                        <p:outputLabel value="Naslov"/>
+                                        <p:inputText value="#{radoviBean.newNaslov}"  required="true" requiredMessage="Niste uneli Naslov"/>
+                                        <p:outputLabel value="Kljucne reci:"/>
+                                        <p:inputText value="#{radoviBean.newKljucneReci}" required="true" requiredMessage="Niste uneli Kljucne reci"/>
+                                        
+                                        <p:outputLabel value="Oblasti"/>
+                                        <p:selectOneMenu value="#{radoviBean.selektovanaOblast}">
+                                            <f:selectItem itemValue="Sva mesta" itemLabel="Sve Oblasti"/>
+                                            <f:selectItems value="#{radoviBean.dohvatiSveOblasti()}"/>
+                                        </p:selectOneMenu>
+                                        
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:tab>
+                            <p:tab title="Apstrakt">
+                                <p:outputLabel value=""/>
+                                <p:inputTextarea value="#{radoviBean.newApstrakt}" rows="20" cols="70" required="true" requiredMessage="Niste uneli tekst."/>
+                            </p:tab>
+                            
+                            <p:tab title="Autori">
+                                <p:panel>
+                                            <p:dataTable value="#{radoviBean.prikaziAutore()}"
+                                                selection="#{radoviBean.selektovaniAutori}" var="value" rowKey="#{value.korisnikID}">
+                                                <f:facet name="header">
+                                                    Autori
+                                                </f:facet>
+                                                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                                <p:column headerText="Id">
+                                                    <h:outputText value="#{value.korisnikID}" />
+                                                </p:column>
+                                                <p:column headerText="Ime">
+                                                    <h:outputText value="#{value.ime}" />
+                                                </p:column>
+                                                <p:column headerText="Prezime">
+                                                    <h:outputText value="#{value.prezime}" />
+                                                </p:column>
+                                                
+                                            </p:dataTable>                                      
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
+                        <p:panelGrid columns="2" class="tabelaBezIvica">
+                            <p:outputLabel value="Fajl:"/>
+                            <p:fileUpload value="#{radoviBean.pretragaKonferencija}" mode="simple"/>
+                        </p:panelGrid>
+                        <p:spacer width="0" height="30px"/>
+                        <p:commandButton value="Napravi" action="#{radoviBean.napraviRad()}" ajax="false"/>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

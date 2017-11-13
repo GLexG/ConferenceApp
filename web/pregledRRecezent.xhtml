@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaRecezent"  icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Radova za Recenziju"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+               <h:form>
+                   <p:growl autoUpdate="true"/>
+                   <p:dataTable id="tabela" value="#{pregledRRecezentBean.radovi}"  var="rad" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pregled Konferencija"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                               
+                            </f:facet>
+                            <p:outputLabel value="#{rad.naslov}"/>
+                        </p:column>
+                        <p:column headerText="Kljucne reci">
+                            <f:facet name="header">
+                                    
+                            </f:facet>
+                            <p:outputLabel value="#{rad.kljucnereci}"/>
+                        </p:column>
+                        <p:column headerText="Apstrakt">
+                            <f:facet name="header">
+                                    
+                            </f:facet>
+                            <p:outputLabel value="#{rad.apstrakt}"/>
+                        </p:column>
+                        <p:column headerText="Rok Recenzije">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{rad.rok}"/>
+                            
+                        </p:column>
+                        <p:column headerText="radSTATUS">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{rad.status}"/>
+                            
+                        </p:column>
+                                               <p:column headerText="STATUS F">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{rad.statusF}"/>
+                            
+                        </p:column>
+
+                        <p:column style="width: 56px" headerText="Rec">
+                            <p:commandButton title="Recenzuj Rad" action="recenzijaRada"  rendered="#{rad.statusF ne 'POSLAT' }" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+                            
+<!--                                    <p:commandButton title="Recenzuj Rad" action="recenzijaRada"  rendered="#{rad.status ne 'PRIHVACEN' or rad.status ne 'ODBIJEN'}" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>-->
+                                    <p:commandButton title="Nista" action="pregledRRecezent"  rendered="#{rad.statusF eq 'POSLAT'}" icon="fa fa-check-circle-o" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

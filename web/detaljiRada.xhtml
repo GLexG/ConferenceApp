@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <title>KVB</title>
+    </h:head>
+    <h:body>
+        <div id="containter">
+            <div id="header">
+                <table width="100%">
+                    <tr>
+                        <td width="30%"></td>
+                        <td width="40%"> Konferencije and chezz </td>
+                        <td width="30%">
+                            <div id="logIn">
+                                <h:form>
+                                    <p:growl autoUpdate="true"/>
+                                    <p:panelGrid style="float: right" class="logInTabela">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Korisnicko ime: "/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{indexBean.username}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Lozinka: "/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:password value="#{indexBean.password}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                              
+                                            <p:column colspan="2">
+                                                <div style="float: right">
+                                                    
+                                                    <p:splitButton value="Prijavi se" action="#{indexBean.logIn()}" icon="fa fa-sign-in">
+                                                        <p:menuitem value="Promeni lozinku" onclick="PF('prom').show();" icon="fa fa-key"/>
+                                                        <p:menuitem value="Registruj se" onclick="PF('reg').show();" icon="fa fa-user-plus"/>
+                                                    </p:splitButton>
+                                                </div>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </h:form>
+                            </div>
+                            <div id="regIPro">
+                                <p:dialog header="Promena lozinke" modal="true" widgetVar="prom" draggable="false" resizable="false">
+                                    <h:form>
+                                        <h:panelGrid columns="2" cellspacing="10px">
+                                            <p:outputLabel value="Korisnicko ime:"/>
+                                            <p:inputText value="#{promenaLozinkeBean.korisnickoIme}" maxlength="15" required="true" requiredMessage="Niste uneli korisnicko ime."/>
+                                            <p:outputLabel value="Stara lozinka:"/>
+                                            <p:password value="#{promenaLozinkeBean.staraLozinka}" maxlength="20" required="true" requiredMessage="Niste uneli staru lozinku."/>
+                                            <p:outputLabel value="Nova lozinka:"/>
+                                            <p:password value="#{promenaLozinkeBean.novaLozinka}" maxlength="20" feedback="true" promptLabel="Unesite lozinku" weakLabel="Slaba" goodLabel="Dobra" strongLabel="Jaka" required="true" requiredMessage="Niste uneli novu lozinku."/>
+                                            <p:outputLabel value="Potvrda lozinke:"/>
+                                            <p:password value="#{promenaLozinkeBean.potvrdaLozinke}" maxlength="20" required="true" requiredMessage="Niste potvrdili novu lozinku."/>
+                                            <p:outputLabel value=""/>
+                                            <p:commandButton value="Promeni lozinku" action="#{promenaLozinkeBean.promeniLoz()}"/>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </p:dialog>
+                            </div>
+                            <div id="regIPro">
+                                <p:dialog header="Registracija" modal="true" widgetVar="reg" draggable="false" resizable="false">
+                                    <h:form>
+                                        <h:panelGrid columns="2" cellspacing="10px">
+                                            <p:outputLabel value="Ime:"/>
+                                            <p:inputText value="#{registracijaBean.ime}" maxlength="20" required="true" requiredMessage="Niste uneli ime."/>
+                                            <p:outputLabel value="Prezime:"/>
+                                            <p:inputText value="#{registracijaBean.prezime}" maxlength="30" required="true" requiredMessage="Niste uneli prezime."/>
+                                            <p:outputLabel value="Korisnicko ime:"/>
+                                            <p:inputText value="#{registracijaBean.korisnickoIme}" maxlength="15" required="true" requiredMessage="Niste uneli korisnicko ime."/>
+                                            <p:outputLabel value="Lozinka:"/>
+                                            <p:password value="#{registracijaBean.lozinka}" maxlength="20" feedback="true" promptLabel="Unesite lozinku" weakLabel="Slaba" goodLabel="Dobra" strongLabel="Jaka" required="true" requiredMessage="Niste uneli lozinku."/>
+                                            <p:outputLabel value="Potvrda lozinke:"/>
+                                            <p:password value="#{registracijaBean.potvrdaLozinke}" maxlength="20" required="true" requiredMessage="Niste potvrdili lozinku."/>
+                                            <p:outputLabel value="Kontakt telefon:"/>
+                                            <p:inputText value="#{registracijaBean.telefon}" maxlength="20" placeholder="+3816XXXXXXXX" required="true" requiredMessage="Niste uneli kontakt telefon." validatorMessage="Neispravan broj telefona.">
+                                                <f:validateRegex pattern="^(\+3816)[0-9]{7,8}$"/>
+                                            </p:inputText>
+
+                                            <p:outputLabel value="Elektronska posta:"/>
+                                            <p:inputText value="#{registracijaBean.email}" maxlength="50" required="true" requiredMessage="Niste uneli elektronsku postu." validatorMessage="Neispravan format elektronske poste.">
+                                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                            </p:inputText>
+                                            
+                                            <p:outputLabel value="Datum rodjenja:"/>
+                                            <p:inputText value="#{registracijaBean.datum}" maxlength="20" required="true" requiredMessage="Niste uneli datum."/>
+                                            
+                                            <p:outputLabel value="Slika:"/>
+                                            <p:inputText value="#{registracijaBean.slika}" maxlength="20" required="true" requiredMessage="Niste uneli sliku."/>
+                                                
+                                            <p:outputLabel value=""/>
+                                            <p:commandButton value="Registruj se" action="#{registracijaBean.registrujSe()}"/>
+
+                                        </h:panelGrid>
+                                    </h:form>
+                                </p:dialog>
+                               
+<!--                                DETALJI-->
+<!--                            <div id="profil">
+                                <p:dialog id = "dlgId" header="Profil" modal="true" widgetVar="prof" draggable="false" resizable="false">
+                                    <p:panelGrid columns="2">
+                                        <f:facet name="header">
+                                            <p:graphicImage value="resources/images/#{indexBean.korisnik.slika}"/>
+                                        </f:facet>    
+                                        <p:outputLabel value="Ime:"/>
+                                        <p:outputLabel value="#{pretragaRadovaBean.selektovaniRad.naslov}"/>
+                                        <p:outputLabel value="Prezime:"/>
+                                        <p:outputLabel value="#{pretragaRadovaBean.selektovaniRad.kljucnereci}"/>
+                                        <p:outputLabel value="Telefon"/>
+                                        <p:outputLabel value="#{pretragaRadovaBean.selektovaniRad.apstrakt}"/>
+
+
+                                    </p:panelGrid>
+                                </p:dialog>
+                            </div>-->
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+<!--            <p:button outcome="pretragaKonferencija" value="Pretraga Konferencija" icon="ui-icon-star">
+            </p:button>-->
+<!--            <p:button outcome="pretragaRadova" value="Pretraga Radova" icon="ui-icon-search">
+            </p:button>-->
+            <div id="sredina">
+                <h:form>
+                    <p:growl autoUpdate="true"/>
+                    
+                                    <p:panelGrid columns="2" style="width: 100%; font-size:22px">  
+                                        <f:facet name="header" >
+                                            <p:row>
+                                                <p:column colspan="7">Detalji rada " #{detaljiRadaBean.selektovaniRad.naslov} "</p:column>
+                                            </p:row>
+                                        </f:facet>    
+                                        <p:outputLabel value="Naslov"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.naslov}"/>
+                                        <p:outputLabel value="Oblast:"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.oblast}"/>
+                                        <p:outputLabel value="Kljucne reci:"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.kljucnereci}"/>
+                                        <p:outputLabel value="Apstrakt"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.apstrakt}"/>
+                                        <p:outputLabel value="Autori"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.autori}"/>
+                                        <p:outputLabel value="Datum"/>
+                                        <p:outputLabel value="#{detaljiRadaBean.selektovaniRad.datum}"/>
+
+
+
+                                    </p:panelGrid>    
+
+<!--                <p:dataTable id="tabela" value="#{detaljiRadaBean.selektovaniRad}"  var="rad" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pregled Detalja"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                               
+                            </f:facet>
+                            <p:outputLabel value="#{rad.naslov}"/>
+                        </p:column>
+                        <p:column headerText="Kljucne reci">
+                            <f:facet name="header">
+                                    
+                            </f:facet>
+                            <p:outputLabel value="#{rad.kljucnereci}"/>
+                        </p:column>
+                        <p:column headerText="Apstrakt">
+                            <f:facet name="header">
+                                    
+                            </f:facet>
+                            <p:outputLabel value="#{rad.apstrakt}"/>
+                        </p:column>
+                        <p:column headerText="Rok Recenzije">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{rad.rok}"/>
+                            
+                        </p:column>
+                        <p:column headerText="radSTATUS">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{rad.status}"/>
+                            
+                        </p:column>
+
+                        <p:column style="width: 56px" headerText="Rec">
+                            <p:commandButton title="Recenzuj Rad" action="recenzijaRada"  rendered="#{rad.statusF ne 'POSLAT' and rad.status ne null}" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+                            
+                                    <p:commandButton title="Recenzuj Rad" action="recenzijaRada"  rendered="#{rad.status ne 'PRIHVACEN' or rad.status ne 'ODBIJEN'}" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+                                    <p:commandButton title="Nista" action="pregledRRecezent"  rendered="#{rad.statusF eq 'POSLAT'}" icon="fa fa-check-circle-o" style="width:57px;height:40px">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>   -->
+                    <p:spacer width="0" height="40px"/>
+                                    <p:commandButton title="Nazad" action="index"  value ="Nazad"  >
+                                        
+                                    </p:commandButton>
+                    </h:form>
+            </div>
+        </div>
+
+        <div id="footer">
+            &copy; 2016 Leon Gradisar - Elektrotehnicki Fakultet Beograd
+<!--            <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />-->
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <title>KVB</title>
+    </h:head>
+    <h:body>
+        <div id="containter">
+            <div id="header">
+                <table width="100%">
+                    <tr>
+                        <td width="30%"></td>
+                        <td width="40%">ConferenceApp</td>
+                        <td width="30%"><ui:insert name="logIn"/></td>
+                    </tr>
+                </table>
+            </div>
+            <h:form>
+                <p:toolbar>
+                    <ui:insert name="leviDeoToolbara"/>
+                    <f:facet name="right">
+                        <p:splitButton value="#{indexBean.korisnik.ime} #{indexBean.korisnik.prezime}" onclick="PF('prof').show();" icon="fa fa-user">
+                            <p:menuitem value="Prijavi Rad" action="dodajRad" icon="fa fa-plus-square-o" rendered="#{indexBean.autor}"/>
+                            <p:menuitem value="Pregledaj Radove" action="pregledRAutor" icon="fa fa-file" rendered="#{indexBean.autor}"/>
+                            <p:menuitem value="Poruke" action="sanduce" icon="fa fa-book" rendered="#{indexBean.recezent}"/>
+                            <p:menuitem value="Pregled Konferencija" action="pregledKRecezent" icon="fa fa-book" rendered="#{indexBean.recezent}"/> 
+                            <p:menuitem value="Pregled Radova" action="pregledRRecezent" icon="fa fa-book" rendered="#{indexBean.recezent}"/>
+                            <p:menuitem value="Pregled Konferencija" action="pocetnaAdmin" icon="fa fa-file-text-o" rendered="#{indexBean.admin}"/> 
+                            <p:menuitem value="Dodaj Konferenciju" action="dodajKonferenciju" icon="fa fa-cubes" rendered="#{indexBean.admin}"/> 
+                            <p:menuitem value="Dodaj Oblast" action="dodajOblast" icon="fa fa-book" rendered="#{indexBean.admin}"/> 
+                            <p:separator/>
+                            <p:menuitem value="Odjavi se" action="#{indexBean.logOut()}" icon="fa fa-sign-out"/>
+                        </p:splitButton>
+                    </f:facet>
+                </p:toolbar>
+                <div id="profil">
+                    <p:dialog header="Profil" modal="true" widgetVar="prof" draggable="false" resizable="false">
+                        <p:panelGrid columns="2">
+                            <f:facet name="header">
+                                <p:graphicImage value="resources/images/#{indexBean.korisnik.slika}"/>
+                            </f:facet>    
+                            <p:outputLabel value="Ime:"/>
+                            <p:outputLabel value="#{indexBean.korisnik.ime}"/>
+                            <p:outputLabel value="Prezime:"/>
+                            <p:outputLabel value="#{indexBean.korisnik.prezime}"/>
+                            <p:outputLabel value="Telefon"/>
+                            <p:outputLabel value="#{indexBean.korisnik.telefon}"/>
+                            <p:outputLabel value="Email:"/>
+                            <p:outputLabel value="#{indexBean.korisnik.email}"/>
+                            <p:outputLabel value="Datum Rodjenja:"/>
+                            <p:outputLabel value="#{indexBean.korisnik.datum}"/>
+                            
+                        </p:panelGrid>
+                    </p:dialog>
+                </div>
+            </h:form>
+            <div id="sredina">
+                <ui:insert name="sredina"/>
+            </div>
+        </div>
+        <div id="footer">
+            &copy; 2016 Leon Gradisar - Elektrotehnicki Fakultet Beograd
+        </div>
+    </h:body>
+</html>
+

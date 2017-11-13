@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAdmin"  icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Komentara i Ocena"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+               <h:form>                     
+                   <p:dataTable id="tabela" value="#{pregledKKomentaraBean.komentari}"  var="konf" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pregled Komentara i Ocena"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Recezent" class="polje">
+                            <f:facet name="header">
+                               
+                            </f:facet>
+                            <p:outputLabel value="#{konf.ime_recezenta}"/>
+                        </p:column>
+
+                        <p:column headerText="Rad">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.naslov}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Ukupna Ocena">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.ukupnaocena}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Prihvatiti bez izmena" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporuka1}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sitnije izmene" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporuka2}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sustinske izmene" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporuka3}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sustinske izmene2" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporuka4}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Odbija" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporuka5}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Preporuka">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.preporukaKoordinatoru}"/>
+                            
+                        </p:column>
+
+<!--                        <p:column style="width: 56px" headerText="Oceni">
+                                    <p:commandButton title="Oceni Oblasti" action="popuniOblast"  rendered="#{konf.ocena_status != 'OCENJEN'}" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="konfID" value="#{konf.radID}"/>
+                                    </p:commandButton>
+                                    <p:commandButton title="Oceni Oblasti" action="pregledKRecezent"  rendered="#{konf.ocena_status == 'OCENJEN'}" icon="fa fa-check-circle-o" style="width:57px;height:40px">
+                                        <f:param name="konfID" value="#{konf.radID}"/>
+                                    </p:commandButton>
+
+                        </p:column>-->
+                    </p:dataTable>
+                   <p:spacer width="0" height="40px"/>
+                   <p:commandButton title="Prihvati Rad" value ="Prihvati Rad" action="#{pregledKKomentaraBean.prihvatiRad()}"   >
+                       <p:confirm header="Confirmation" message="Da li ste sigurni da zelite da Prihvatite Rad?" icon="ui-icon-alert" />
+                       <f:param name="konfID" value="#{konf.radID}"/>
+                    </p:commandButton> <p:spacer width="10px" height="0px"/>
+                    <p:commandButton title="Posalji na izmenu" value ="Posalji na izmenu" action="#{pregledKKomentaraBean.posaljiNaIzmenu()}"    >
+                        <p:confirm header="Confirmation" message="Da li ste sigurni da zelite da posaljete Rad na Izmenu?" icon="ui-icon-alert" />
+                        <f:param name="konfID" value="#{konf.radID}"/>
+                    </p:commandButton> <p:spacer width="10" height="0px"/>
+                    <p:commandButton title="Odbij rad" value = "Odbij rad" action="#{pregledKKomentaraBean.odbijRad()}"    >
+                        <p:confirm header="Confirmation" message="Da li ste sigurni da zelite da Odbijete Rad??" icon="ui-icon-alert" />
+                        <f:param name="konfID" value="#{konf.radID}"/>
+                    </p:commandButton> <p:spacer width="10" height="0px"/>
+                    
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                   
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

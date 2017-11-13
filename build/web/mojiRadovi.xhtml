@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="sredina">
+                <h:form>                     
+                    <!--               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx     TABELA ZA RADOVE  xxxxxxxxxxxxxxxxxxxxxxxxxxxx         -->
+                   <p:dataTable id="tabela2" value="#{radoviBean.prikaziMojeRadove()}" filteredValue="#{indexBean.rezultatPretrage2}" var="rad" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pretraga Radova"/>
+                            </p:outputPanel>
+                        </f:facet>
+                       
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                                <p:outputLabel value="Naziv"/><br/>
+                                <p:inputText value="#{radoviBean.pretragaNaziv}" onfocus="this.value=this.value">    <!--onfocus da bi kursor ostao na kraju teksta-->
+                                    <p:ajax event="keyup" listener="#{radoviBean.pretrazi()}" update="tabela2" delay="700"/>
+                                </p:inputText>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.naslov}"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="#{rad.kljucnereci}"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="#{rad.apstrakt}"/>
+                        </p:column>
+                        <p:column headerText="Mesto">
+                            <f:facet name="header">
+                                <p:outputLabel value="Mesto"/><br/>
+                                <p:selectOneMenu value="#{radoviBean.pretragaOblast}">
+                                    <f:selectItem itemValue="Sva mesta" itemLabel="Sva mesta"/>
+                                    <f:selectItems value="#{radoviBean.dohvatiSveOblasti()}"/>
+                                    <p:ajax event="change" listener="#{radoviBean.pretrazi()}" update="tabela2"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.oblast}"/>
+                        </p:column>
+                        <p:column style="width: 40px">
+                            <p:commandButton title="Detalji" action="dogadjaj" icon="fa fa-info">
+                                <f:param name="id" value="#{rad.radID}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable> 
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

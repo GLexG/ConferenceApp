@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="sanduce"  icon="fa fa-home"/>
+                        <p:menuitem value="Pregled pozvanih Konferencija"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+               <h:form>                     
+                   <p:dataTable id="tabela" value="#{pregledKRecezentBean.konferencije}"  var="konf" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pregled Konferencija"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                               
+                            </f:facet>
+                            <p:outputLabel value="#{konf.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Mesto">
+                            <f:facet name="header">
+                                    
+                            </f:facet>
+                            <p:outputLabel value="#{konf.mesto}"/>
+                        </p:column>
+                        <p:column headerText="Vreme Odrzavanja">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.vreme_odrzavanja}"/>
+                            
+                        </p:column>
+<!--                        <p:column headerText="STATUS">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.ocena_status}"/>
+                            
+                        </p:column>-->
+                        <p:column style="width: 56px" headerText="Oceni">
+                                    <p:commandButton title="Oceni Oblasti" action="popuniOblast"  rendered="#{konf.ocena_status != 'OCENJEN'}" icon="fa fa-bars" style="width:57px;height:40px">
+                                        <f:param name="konfID" value="#{konf.konfID}"/>
+                                    </p:commandButton>
+                                    <p:commandButton title="Oceni Oblasti" action="pregledKRecezent"  rendered="#{konf.ocena_status == 'OCENJEN'}" icon="fa fa-check-circle-o" style="width:57px;height:40px">
+                                        <f:param name="konfID" value="#{konf.konfID}"/>
+                                    </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

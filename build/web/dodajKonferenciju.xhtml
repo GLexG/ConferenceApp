@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAdmin" icon="fa fa-home"/>
+                        <p:menuitem value="Dodavanje Konferencije"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+                <h:form enctype="multipart/form-data">
+                    <p:growl autoUpdate="true"/>
+                    <div id="sanduceInfo">
+                        <p:wizard backLabel="Nazad" nextLabel="Dalje">
+                            <p:tab title="Osnovni podaci">
+                                <p:panel>
+                                    <p:panelGrid columns="2" class="tabelaBezIvica">
+                                            
+                                        <p:outputLabel value="Naziv"/>
+                                        <p:inputText value="#{dodajKonferencijuBean.knaziv}"  required="false" requiredMessage="Niste uneli Naslov"/>
+                                        
+                                        <p:outputLabel value="Mesto"/>
+                                        <p:inputText value="#{dodajKonferencijuBean.mesto}"  required="false" requiredMessage="Niste uneli Naslov"/>
+                                        
+                                        <p:outputLabel value="Datum Konferencije"/>
+                                        <p:calendar value="#{dodajKonferencijuBean.vreme_odrzavanja}" pattern="dd/MM/yyyy HH:mm" required="false" requiredMessage="Niste uneli datum dogadjaja."/>
+                                        
+                                        <p:outputLabel value="Datum pocetka prijave Radova::"/>
+                                        <p:calendar value="#{dodajKonferencijuBean.vreme_od}" pattern="dd/MM/yyyy HH:mm" required="false" requiredMessage="Niste uneli datum dogadjaja."/>
+                                        
+                                        <p:outputLabel value="Datum zavrsetka prijave Radova:"/>
+                                        <p:calendar value="#{dodajKonferencijuBean.vreme_do}" pattern="dd/MM/yyyy HH:mm" required="false" requiredMessage="Niste uneli datum dogadjaja."/>
+                                        
+                                        <p:outputLabel value="Max broj predatih radova po autoru"/>
+                                        <p:inputText value="#{dodajKonferencijuBean.maxrad}"  required="false" requiredMessage="Niste uneli Broj radova"/>
+                                        
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:tab>
+                            <p:tab title="Oblasti">
+                                <p:panel>
+                                            <p:dataTable value="#{dodajKonferencijuBean.prikaziOblasti()}"
+                                                selection="#{dodajKonferencijuBean.selektovaneOblasti}" var="value" rowKey="#{value.oblastID}">
+                                                <f:facet name="header">
+                                                    Oblasti
+                                                </f:facet>
+                                                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                                <p:column headerText="Id">
+                                                    <h:outputText value="#{value.oblastID}" />
+                                                </p:column>
+                                                <p:column headerText="Naziv">
+                                                    <h:outputText value="#{value.naziv}" />
+                                                </p:column>
+                                                
+                                            </p:dataTable>                                      
+                                </p:panel>
+                            </p:tab>
+                            <p:tab title="Recezenti">
+                                <p:panel>
+                                            <p:dataTable value="#{dodajKonferencijuBean.prikaziRecezente()}"
+                                                selection="#{dodajKonferencijuBean.selektovaniRecezenti}" var="value" rowKey="#{value.korisnikID}">
+                                                <f:facet name="header">
+                                                    Recezenti
+                                                </f:facet>
+                                                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                                <p:column headerText="Id">
+                                                    <h:outputText value="#{value.korisnikID}" />
+                                                </p:column>
+                                                <p:column headerText="Ime">
+                                                    <h:outputText value="#{value.ime}" />
+                                                </p:column>
+                                                <p:column headerText="Prezime">
+                                                    <h:outputText value="#{value.prezime}" />
+                                                </p:column>
+                                                
+                                            </p:dataTable>                                      
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
+
+                        <p:spacer width="0" height="30px"/>
+                        <p:commandButton value="Napravi" action="#{dodajKonferencijuBean.napraviKonferenciju()}" ajax="false"/>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

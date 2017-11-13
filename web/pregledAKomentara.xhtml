@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAutor"  icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Komentara Recezenta"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+               <h:form>                     
+                   <p:dataTable id="tabela" value="#{pregledAKomentaraBean.komentari}"  var="konf" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pregled Komentara i Ocena"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Recezent" class="polje">
+                            <f:facet name="header">
+                               
+                            </f:facet>
+                            <p:outputLabel value="#{konf.ime_recezenta}"/>
+                        </p:column>
+
+                        <p:column headerText="Rad">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.naslov}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Ukupna Ocena">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.ukupnaocena}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Prihvatiti bez izmena" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.komentar1}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sitnije izmene" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.komentar2}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sustinske izmene" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.komentar3}"/>
+                            
+                        </p:column>
+                        <p:column headerText="Uz sustinske izmene2" style="width: 80px">
+                            <f:facet name="header">
+                                
+                            </f:facet>
+                            <p:outputLabel value="#{konf.komentar4}"/>
+                            
+                        </p:column>
+
+                    </p:dataTable>
+                   <p:spacer width="0" height="40px"/>
+                   <p:commandButton title="Nazad na Radove" value ="Nazad" action="pregledRAutor"   >
+
+                    </p:commandButton> <p:spacer width="10px" height="0px"/>
+
+                    <p:commandButton title="Posalji nazad na recenziju" value ="Posalji nazad na recenziju" action="#{pregledAKomentaraBean.posaljiNazadNaRecenziju()}"   >
+
+                    </p:commandButton> <p:spacer width="10px" height="0px"/>
+
+                    
+
+                   
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAdmin" icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Radova"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+                <h:form>
+                    <p:growl autoUpdate="true"/>
+
+                    <p:dataTable id="tabela2" value="#{pregledKoordinatorBean.radovi}" filteredValue="#{pregledKoordinatorBean.rezultatPretrage2}" var="rad" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pretraga Radova"/>
+                            </p:outputPanel>
+                        </f:facet>
+                       
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                                <p:outputLabel value="Naziv"/><br/>
+                                <p:inputText value="#{pregledKoordinatorBean.pretragaNaziv}" onfocus="this.value=this.value" style="display:block;width:180px" >    <!--onfocus da bi kursor ostao na kraju teksta-->
+                                    <p:ajax event="keyup" listener="#{pregledKoordinatorBean.pretrazi()}" update="tabela2" delay="700"/>
+                                </p:inputText>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.naslov}"/>
+                        </p:column>
+ 
+                        <p:column headerText="Kljucne reci">
+                            <p:outputLabel value="#{rad.kljucnereci}"/>
+                        </p:column>
+
+                        <p:column headerText="Oblasti">
+                            <f:facet name="header">
+                                <p:outputLabel value="Oblasti"/><br/>
+                                <p:selectOneMenu value="#{pregledKoordinatorBean.pretragaOblast}">
+                                    <f:selectItem itemValue="Sva mesta" itemLabel="Sve Oblasti"/>
+                                    <f:selectItems value="#{pregledKoordinatorBean.dohvatiSveOblasti()}"/>
+                                    <p:ajax event="change" listener="#{pregledKoordinatorBean.pretrazi()}" update="tabela2"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.oblast}"/>
+                        </p:column>
+                        
+                        <p:column headerText="STATUS">                         
+                            <p:outputLabel value="#{rad.status}" style="color : #{rad.status eq 'PRIHVACEN' ? 'green' : rad.status eq 'NA RECENZIJI' ? 'orange' : rad.status eq 'PREDAT' ? 'blue' : rad.status eq 'ODBIJEN' ? 'red' : null};"/>
+                        </p:column>
+                        
+                        <p:column style="width: 50px" headerText="Ocene Rec">
+                                    <p:commandButton title="Pregled Komentara" action="pregledKKomentara"  icon="fa fa-font" rendered="#{rad.status != 'KREIRAN'}">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                        <f:param name="konfID" value="#{pregledKoordinatorBean.konfID}"/>        
+                                    </p:commandButton>
+                        </p:column>
+                         
+                        <p:column style="width: 50px" headerText="Dodaj Rec">
+                                    <p:commandButton title="Dodaj recezente" action="dodajRecezente"  icon="fa fa-plus" rendered="#{rad.status != 'KREIRAN'}">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                        <f:param name="konfID" value="#{pregledKoordinatorBean.konfID}"/>        
+                                    </p:commandButton>
+                        </p:column>
+
+<!--                        <p:column style="width: 50px" headerText="Delete">
+                                    <p:commandButton title="Icon Only" action="izmenaRada"  icon="fa fa-times">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+                        </p:column>-->
+                        
+                    </p:dataTable>                                     
+
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

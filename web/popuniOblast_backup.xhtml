@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAdmin" icon="fa fa-home"/>
+                        <p:menuitem value="Ocenjivanje Oblasti Konferencije"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+               <h:form>
+                   <p:layout style="min-width:1000px;min-height:400px;">
+                       <p:layoutUnit position="west" resizable="false" size="1000" minSize="400" maxSize="2000">
+                        <p:dataTable id="tabela" value="#{popuniOblastBean.sveOblasti}"  var="o" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                             <f:facet name="header">
+                                 <p:outputPanel>
+                                     <p:outputLabel value="Oceni oblasti"/>
+                                 </p:outputPanel>
+                             </f:facet>
+                             <f:facet name="header">
+                                 <p:outputPanel>
+                                     <p:outputLabel value="#{o.knaziv}"/>
+                                 </p:outputPanel>
+                             </f:facet>
+                             <p:column headerText="Oblast" class="polje">
+                                 <f:facet name="header">
+
+                                 </f:facet>
+                                 <p:outputLabel value="#{o.naziv}"/>
+                             </p:column>
+
+                             <p:column headerText="Ocena">
+                                 <f:facet name="header">
+
+                                 </f:facet>
+                                 <p:inplace>
+                                     <p:inputText value="#{o.ocena}" required="true" requiredMessage="Niste uneli Ocenu!"/>
+                                 </p:inplace>  
+
+                             </p:column>
+                         </p:dataTable>
+                        </p:layoutUnit>
+                       <p:layoutUnit position="center">
+                                Center
+                       </p:layoutUnit>
+                    <p:commandButton value="Oceni" title="Oceni Oblasti" action="#{popuniOblastBean.oceniOblast()}"   >
+                    </p:commandButton>
+                    </h:form>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

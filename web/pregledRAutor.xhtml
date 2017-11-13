@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="leviDeoToolbara">
+                <f:facet name="left">
+                    <p:breadCrumb class="mrvice">
+                        <p:menuitem outcome="pocetnaAutor"  icon="fa fa-home"/>
+                        <p:menuitem value="Pregled Radova"/>
+                    </p:breadCrumb>
+                </f:facet>
+            </ui:define>
+            <ui:define name="sredina">
+                <h:form>
+                    <p:growl autoUpdate="true"/>
+
+                    <p:dataTable id="tabela2" value="#{radoviBean.mojiAktivniRadovi}" filteredValue="#{radoviBean.rezultatPretrage2}" var="rad" emptyMessage="Ne postoje aktivni dogadjaji za zadati kriterijum.">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:outputLabel value="Pretraga Radova"/>
+                            </p:outputPanel>
+                        </f:facet>
+                       
+                        <p:column headerText="Naziv" class="polje">
+                            <f:facet name="header">
+                                <p:outputLabel value="Naziv"/><br/>
+                                <p:inputText value="#{radoviBean.pretragaNaziv}" onfocus="this.value=this.value" style="display:block;width:180px">    <!--onfocus da bi kursor ostao na kraju teksta-->
+                                    <p:ajax event="keyup" listener="#{radoviBean.pretrazi()}" update="tabela2" delay="700"/>
+                                </p:inputText>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.naslov}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Oblasti">
+                            <f:facet name="header">
+                                <p:outputLabel value="Oblasti"/><br/>
+                                <p:selectOneMenu value="#{radoviBean.pretragaOblast}">
+                                    <f:selectItem itemValue="Sva mesta" itemLabel="Sve Oblasti"/>
+                                    <f:selectItems value="#{radoviBean.dohvatiSveOblasti()}"/>
+                                    <p:ajax event="change" listener="#{radoviBean.pretrazi()}" update="tabela2"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.oblast}"/>
+                        </p:column>
+                         <p:column headerText="Konferencije">
+                            <f:facet name="header">
+                                <p:outputLabel value="Konferencije"/><br/>
+                                <p:selectOneMenu value="#{radoviBean.pretragaKonferencija}">
+                                    <f:selectItem itemValue="Sve Konferencije" itemLabel="Sve Konferencije"/>
+                                    <f:selectItems value="#{radoviBean.dohvatiSveKonferencije()}"/>
+                                    <p:ajax event="change" listener="#{radoviBean.pretrazi()}" update="tabela2"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{rad.knaziv}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <p:outputLabel value="#{rad.status}" style="color : #{rad.status eq 'PRIHVACEN' ? 'green' : rad.status eq 'NA RECENZIJI' ? 'orange' : rad.status eq 'KREIRAN' ? 'violet' : rad.status eq 'PREDAT' ? 'blue' : rad.status eq 'ODBIJEN' ? 'red' : null};"/>
+                        </p:column>
+                        <p:column style="width: 40px" headerText="Send">
+                            <p:commandButton title="Posalji rad" action="#{radoviBean.posaljiRad()}" icon="fa fa-check" rendered="#{rad.status == 'KREIRAN' or rad.status eq 'NA_ISPRAVCI'}" >
+                                <p:confirm header="Confirmation" message="Da li ste sigurni da zelite da Posaljete Rad?" icon="ui-icon-alert" />
+                                <f:param name="radID" value="#{rad.radID}"/>
+                            </p:commandButton>
+                            
+                            
+                            
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                        </p:column>
+                        <p:column style="width: 40px" headerText="Edit">
+                                    <p:commandButton title="EDITUJ RAD" action="izmenaRada"  icon="fa fa-edit" rendered="#{rad.status eq 'KREIRAN' or rad.status eq 'NA_ISPRAVCI'}">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+<!--                                    <p:commandButton title="Icon Only" action="pregledRAutor"  icon="fa fa-check-circle-o" rendered="#{rad.status eq 'PREDAT'}">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>-->
+
+                        </p:column>
+                        
+                        <p:column style="width: 50px" headerText="Delete">
+                                    <p:commandButton title="IZBRISI RAD" action="#{radoviBean.izbrisiRad(rad.radID)}"  icon="fa fa-times" rendered="#{rad.status eq 'KREIRAN'}">
+                                        <p:confirm header="Confirmation" message="Da li ste sigurni da zelite da Izbrisete Rad?" icon="ui-icon-alert" />
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+
+                        </p:column>
+                        <p:column style="width: 50px" headerText="Comm">
+                                    <p:commandButton title="Pregled KOM" action="pregledAKomentara"  icon="fa fa-text-width" rendered="#{rad.status eq 'NA_ISPRAVCI' or rad.status eq 'ISPRAVLJEN'}">
+                                        <f:param name="radID" value="#{rad.radID}"/>
+                                    </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>                                     
+
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
